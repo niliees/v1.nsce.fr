@@ -8,6 +8,18 @@ function getUrlParameters() {
     return params;
 }
 
+// Funktion zur Validierung des Codes
+function validateCode(code) {
+    // Prüft ob der Code 4 Zeichen lang ist und nur Buchstaben und Zahlen enthält
+    return /^[a-zA-Z0-9]{4}$/.test(code);
+}
+
+// Funktion zum Weiterleiten mit Code
+function redirectWithCode(code) {
+    const currentUrl = window.location.origin + window.location.pathname;
+    window.location.href = `${currentUrl}?v=${code}`;
+}
+
 // Funktion zum Laden verschiedener Inhalte basierend auf dem v-Parameter
 async function loadContent() {
     const params = getUrlParameters();
@@ -29,14 +41,47 @@ async function loadContent() {
             contentDiv.innerHTML = '<p>Fehler beim Laden des Inhalts.</p>';
         }
     } else {
-        // Standardinhalt wenn kein v-Parameter vorhanden ist
+        // Standardinhalt mit Eingabefeld
         contentDiv.innerHTML = `
-            <link href="https://cdn.nsce.fr/main.css" rel="stylesheet">
             <div class="container">
                 <h1>nsce.fr</h1>
                 <p>v1.nsce.fr ist ein Projekt der <a href="https://nsce.fr">NSCE</a></p>
+                
+                <div class="code-input-container" style="margin-top: 20px;">
+                    <input type="text" 
+                           id="codeInput" 
+                           maxlength="4" 
+                           placeholder="Code eingeben (4 Zeichen)"
+                           style="padding: 8px; font-size: 16px; width: 200px; margin-right: 10px;">
+                    <button onclick="handleCodeSubmit()" 
+                            style="padding: 8px 16px; font-size: 16px; cursor: pointer;">
+                        Öffnen
+                    </button>
+                    <p id="errorMessage" style="color: red; margin-top: 10px;"></p>
+                </div>
             </div>
         `;
+
+        // Event-Listener für Enter-Taste
+        document.getElementById('codeInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                handleCodeSubmit();
+            }
+        });
+    }
+}
+
+// Funktion zum Behandeln der Code-Eingabe
+function handleCodeSubmit() {
+    const codeInput = document.getElementById('codeInput');
+    const errorMessage = document.getElementById('errorMessage');
+    const code = codeInput.value.trim();
+    
+    if (validateCode(code)) {
+        errorMessage.textContent = '';
+        redirectWithCode(code);
+    } else {
+        errorMessage.textContent = 'Bitte geben Sie einen gültigen 4-stelligen Code ein (Buchstaben und Zahlen)';
     }
 }
 
