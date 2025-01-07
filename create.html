@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>nsce.fr - Create</title>
+    <link href="https://cdn.nsce.fr/main.css" rel="stylesheet">
+    <script>
+        function generateCode() {
+            const chars = 'abcdefghijklmnopqrstuvwxyz0123456789';
+            let code = '';
+            for (let i = 0; i < 4; i++) {
+                code += chars.charAt(Math.floor(Math.random() * chars.length));
+            }
+            return code;
+        }
+
+        async function createPage() {
+            const code = generateCode();
+            const content = `<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>nsce.fr - ${code}</title>
+    <link href="https://cdn.nsce.fr/main.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <h1>nsce.fr</h1>
+        <p>Dies ist die Seite ${code}</p>
+    </div>
+</body>
+</html>`;
+
+            try {
+                const response = await fetch('/api/create', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        filename: `${code}.html`,
+                        content: content
+                    }),
+                });
+
+                if (response.ok) {
+                    document.getElementById('code').textContent = code;
+                    document.getElementById('codeUrl').textContent = code;
+                    document.getElementById('result').classList.remove('hidden');
+                }
+            } catch (error) {
+                console.error('Fehler beim Erstellen der Seite:', error);
+            }
+        }
+    </script>
+</head>
+<body>
+    <div class="container">
+        <h1>nsce.fr - Create</h1>
+        <button class="button" onclick="createPage()">Neue Seite erstellen</button>
+        <div id="result" class="hidden">
+            <p>Neue Seite erstellt mit Code: <strong id="code"></strong></p>
+            <p>Sie können die Seite unter v1.nsce.fr/?v=<span id="codeUrl"></span> aufrufen.</p>
+        </div>
+    </div>
+</body>
+</html>
