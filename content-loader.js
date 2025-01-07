@@ -43,7 +43,7 @@ async function loadContent() {
     } else {
         // Standardinhalt mit Eingabefeld
         contentDiv.innerHTML = `
-            <div class="container">
+            <div class="container" style="padding: 20px; max-width: 800px; margin: 0 auto;">
                 <h1>nsce.fr</h1>
                 <p>v1.nsce.fr ist ein Projekt der <a href="https://nsce.fr">NSCE</a></p>
                 
@@ -86,4 +86,7 @@ function handleCodeSubmit() {
 }
 
 // Laden Sie den Inhalt wenn die Seite geladen ist
-document.addEventListener('DOMContentLoaded', loadContent);
+document.addEventListener('DOMContentLoaded', () => {
+    console.log('Seite geladen, führe loadContent aus');
+    loadContent();
+});
