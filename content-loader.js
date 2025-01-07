@@ -31,8 +31,20 @@ async function loadContent() {
     } else {
         // Standardinhalt wenn kein v-Parameter vorhanden ist
         contentDiv.innerHTML = `
-            <h1>Willkommen</h1>
-            <p>Dies ist die Standardseite.</p>
+            <!DOCTYPE html>
+            <html lang="de">
+            <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>nsce.fr</title>
+            <link href="https://cdn.nsce.fr/main.css" rel="stylesheet">
+            <body>
+            <div class="container">
+            <h1>nsce.fr</h1>
+            <p>v1.nsce.fr ist ein Projekt der <a href="https://nsce.fr">NSCE</a></p>
+            </div>
+            </body>
+            </html>
         `;
     }
 }
