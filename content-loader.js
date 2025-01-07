@@ -24,21 +24,6 @@ async function loadContent() {
                 return;
             }
             
-            // Option 2: Verschiedene vordefinierte Inhalte
-            switch(params.v) {
-                case 'abc123':
-                    contentDiv.innerHTML = `
-                        <h1>Anderer Inhalt für abc123</h1>
-                        <p>Dies ist ein anderer Inhalt für den Code abc123.</p>
-                    `;
-                    break;
-                    
-                default:
-                    contentDiv.innerHTML = `
-                        <h1>Code nicht gefunden</h1>
-                        <p>Der angegebene Code "${params.v}" wurde nicht gefunden.</p>
-                    `;
-            }
         } catch (error) {
             console.error('Fehler beim Laden des Inhalts:', error);
             contentDiv.innerHTML = '<p>Fehler beim Laden des Inhalts.</p>';
