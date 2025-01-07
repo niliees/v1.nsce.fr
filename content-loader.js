@@ -44,14 +44,12 @@ async function loadContent() {
         // Standardinhalt mit Eingabefeld
         contentDiv.innerHTML = `
             <div class="container" style="padding: 20px; max-width: 800px; margin: 0 auto;">
-                <h1>nsce.fr</h1>
-                <p>v1.nsce.fr ist ein Projekt der <a href="https://nsce.fr">NSCE</a></p>
-                
+                <h1>Bitte geben sie den Website Code ein</h1>
                 <div class="code-input-container" style="margin-top: 20px;">
                     <input type="text" 
                            id="codeInput" 
                            maxlength="4" 
-                           placeholder="Code eingeben (4 Zeichen)"
+                           placeholder="1a2b"
                            style="padding: 8px; font-size: 16px; width: 200px; margin-right: 10px;">
                     <button onclick="handleCodeSubmit()" 
                             style="padding: 8px 16px; font-size: 16px; cursor: pointer;">
