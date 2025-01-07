@@ -16,7 +16,13 @@ async function loadContent() {
     // Prüfen ob der v-Parameter existiert
     if (params.v) {
         try {
-            
+            // Option 1: Laden einer anderen HTML-Datei
+            const response = await fetch(`${params.v}.html`);
+            if (response.ok) {
+                const content = await response.text();
+                contentDiv.innerHTML = content;
+                return;
+            }
             
             // Option 2: Verschiedene vordefinierte Inhalte
             switch(params.v) {
