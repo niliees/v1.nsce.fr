@@ -26,13 +26,6 @@ async function loadContent() {
             
             // Option 2: Verschiedene vordefinierte Inhalte
             switch(params.v) {
-                case 'f8sj':
-                    contentDiv.innerHTML = `
-                        <h1>Spezieller Inhalt für f8sj</h1>
-                        <p>Hier ist der spezifische Inhalt für den Code f8sj.</p>
-                    `;
-                    break;
-                    
                 case 'abc123':
                     contentDiv.innerHTML = `
                         <h1>Anderer Inhalt für abc123</h1>
