@@ -36,24 +36,33 @@
 <body>
     <main>
         <h1>Code:</h1>
-        <pre><code>let distance = 0
+        <pre><code>// Setze den Motor an Pin P0
+let motorPin = DigitalPin.P0
+// Setze die LED an Pin P1
+let ledPin = DigitalPin.P1
+// Setze den externen Knopf an Pin P2
+let buttonPin = DigitalPin.P2
+// Setze den externen Knopf an Pin P2
+// Überwache den Zustand des externen Knopfes
 basic.forever(function () {
-    distance = sonar.ping(
-    DigitalPin.P0,
-    DigitalPin.P1,
-    PingUnit.Centimeters
-    )
-    if (distance < 10) {
-        music.playTone(262, music.beat(BeatFraction.Quarter))
-        basic.showIcon(IconNames.Meh)
-    } else if (distance < 20) {
-        music.playTone(294, music.beat(BeatFraction.Quarter))
-        basic.showIcon(IconNames.House)
-    } else {
-        basic.pause(1000)
-        basic.showIcon(IconNames.Heart)
+    if (pins.digitalReadPin(buttonPin) == 1) {
+        // Motor einschalten
+        pins.digitalWritePin(motorPin, 1)
+        // LED einschalten
+        pins.digitalWritePin(ledPin, 1)
+        // Warte 60 Sekunden
+        basic.pause(60000)
+        // Motor und LED ausschalten
+        pins.digitalWritePin(motorPin, 0)
+        pins.digitalWritePin(ledPin, 0)
+        // Warte, bis der Knopf losgelassen wird, um mehrfaches Auslösen zu verhindern
+        while (pins.digitalReadPin(buttonPin) == 1) {
+            // Kurze Pause, um CPU-Last zu reduzieren
+            basic.pause(100)
+        }
     }
-})</code></pre>
+})
+</code></pre>
     </main>
 </body>
 </html>
