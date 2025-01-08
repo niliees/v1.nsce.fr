@@ -16,12 +16,27 @@
             font-family: 'Courier New', monospace;
             margin-top: 20vh;
         }
+
+        pre {
+            text-align: left;
+            background-color: #1a1a1a;
+            padding: 20px;
+            border-radius: 5px;
+            margin: 20px auto;
+            max-width: 600px;
+            overflow-x: auto;
+        }
+
+        code {
+            white-space: pre;
+            display: block;
+        }
     </style>
 </head>
 <body>
     <main>
         <h1>Code:</h1>
-        <h1> <let distance = 0
+        <pre><code>let distance = 0
 basic.forever(function () {
     distance = sonar.ping(
     DigitalPin.P0,
@@ -38,8 +53,7 @@ basic.forever(function () {
         basic.pause(1000)
         basic.showIcon(IconNames.Heart)
     }
-})
- </h1>
+})</code></pre>
     </main>
 </body>
 </html>
