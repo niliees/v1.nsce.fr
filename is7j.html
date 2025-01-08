@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.nsce.com/main.css">
+    <title>W nsce</title>
+    <style>
+        body {
+            background-color: #000000;
+        }
+        
+        main {
+            color: #006eff;
+            text-align: center;
+            font-family: 'Courier New', monospace;
+            margin-top: 20vh;
+        }
+    </style>
+</head>
+<body>
+    <main>
+        <h1>Code:</h1>
+        <a> <let distance = 0
+basic.forever(function () {
+    distance = sonar.ping(
+    DigitalPin.P0,
+    DigitalPin.P1,
+    PingUnit.Centimeters
+    )
+    if (distance < 10) {
+        music.playTone(262, music.beat(BeatFraction.Quarter))
+        basic.showIcon(IconNames.Meh)
+    } else if (distance < 20) {
+        music.playTone(294, music.beat(BeatFraction.Quarter))
+        basic.showIcon(IconNames.House)
+    } else {
+        basic.pause(1000)
+        basic.showIcon(IconNames.Heart)
+    }
+})
+ </a>
+    </main>
+</body>
+</html>
