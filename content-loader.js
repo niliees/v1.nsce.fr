@@ -1,3 +1,18 @@
+// Funktion zum Laden der Shortlinks aus der JSON-Datei
+async function loadShortlinks() {
+    try {
+        const response = await fetch('shortlinks.json');
+        if (!response.ok) {
+            throw new Error('Shortlinks konnten nicht geladen werden');
+        }
+        const data = await response.json();
+        return data.links;
+    } catch (error) {
+        console.error('Fehler beim Laden der Shortlinks:', error);
+        return {};
+    }
+}
+
 // Funktion zum Auslesen der URL-Parameter
 function getUrlParameters() {
     const urlParams = new URLSearchParams(window.location.search);
@@ -21,7 +36,16 @@ function validateEditId(editId) {
 }
 
 // Funktion zum Weiterleiten mit Code und Parametern
-function redirectWithParameters(code, editId = null, view = null, theme = null, version = null, preview = null, print = null, embed = null) {
+async function redirectWithParameters(code, editId = null, view = null, theme = null, version = null, preview = null, print = null, embed = null) {
+    const shortlinks = await loadShortlinks();
+    
+    // Prüfe ob ein Shortlink für den Code existiert
+    if (shortlinks[code]) {
+        window.location.href = shortlinks[code];
+        return;
+    }
+    
+    // Wenn kein Shortlink gefunden wurde, verwende die Standard-Logik
     const currentUrl = window.location.origin + window.location.pathname;
     let url = `${currentUrl}?v=${code}`;
     
@@ -37,8 +61,16 @@ function redirectWithParameters(code, editId = null, view = null, theme = null, 
 }
 
 // Funktion zum Überprüfen und Ausführen von Weiterleitungen
-function checkAndRedirect() {
+async function checkAndRedirect() {
     const params = getUrlParameters();
+    
+    if (params.v) {
+        const shortlinks = await loadShortlinks();
+        if (shortlinks[params.v]) {
+            window.location.href = shortlinks[params.v];
+            return true;
+        }
+    }
     
     if (params.short === 'true') {
         const targetUrl = 'w.nsce.fr';
@@ -100,7 +132,7 @@ function createEmbedVersion() {
 
 // Funktion zum Laden verschiedener Inhalte basierend auf den Parametern
 async function loadContent() {
-    if (checkAndRedirect()) return;
+    if (await checkAndRedirect()) return;
 
     const params = getUrlParameters();
     const contentDiv = document.getElementById('content');
@@ -153,7 +185,7 @@ async function loadContent() {
             contentDiv.innerHTML = '<p>Fehler beim Laden des Inhalts.</p>';
         }
     } else {
-        // Erweiterte Eingabemaske mit zusätzlichen Optionen
+        // Eingabemaske mit zusätzlichen Optionen
         contentDiv.innerHTML = `
             <div class="container" style="padding: 20px; max-width: 800px; margin: 0 auto;">
                 <h1>Code Eingeben</h1>                
@@ -219,7 +251,7 @@ async function loadContent() {
     }
 }
 
-// Erweiterte Funktion zum Behandeln der Eingabe
+// Funktion zum Behandeln der Eingabe
 function handleSubmit() {
     const codeInput = document.getElementById('codeInput');
     const editIdInput = document.getElementById('editIdInput');
